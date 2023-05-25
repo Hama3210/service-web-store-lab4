@@ -6,7 +6,7 @@ name: Docker Build and test
 on:
   push:
     branch:
-      - test
+      - testing-pipline
 jobs:
   build:
     runs-on: ubuntu-latest
