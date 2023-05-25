@@ -1,0 +1,26 @@
+ name: Doker Build and test
+
+ on:
+ push:
+ branch:
+ - testing-pipline
+
+ jops:
+ build:
+ runs-on: ubuntu-latest
+
+ steps:
+ - name: Ckechout our repasitory
+ uses: actions/checkout@v2
+
+ -name: setup Node
+ uses: actions/setup-node@v2
+ with:
+ node-version: '14'
+- name: Build the docker Image 
+run: docker build -t hamadlshad/service-web-store-devops:hamadlshad/service-web-store-devops .
+-name: Long in to the ole Docker hup
+run: docker Login -u ${{ secrets.HAMA_USERNAME}} -p ${{secrets.TOKEN}}
+
+-name: Push the docker to that silly little dockerhup
+run: docker push hamadlshad/service-web-store-devops:hamadlshad/service-web-store-devops
