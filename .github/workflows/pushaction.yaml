@@ -1,26 +1,30 @@
- name: Doker Build and test
 
- on:
- push:
- branch:
- - testing-pipline
 
- jops:
- build:
- runs-on: ubuntu-latest
+name: Docker Build and test
 
- steps:
- - name: Ckechout our repasitory
- uses: actions/checkout@v2
+# trigger, on pull, clone, push
+on:
+  push:
+    branch:
+      - test
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
- -name: setup Node
- uses: actions/setup-node@v2
- with:
- node-version: '14'
-- name: Build the docker Image 
-run: docker build -t hama3210/service-web-store-lab4:hamadlshad/service-web-store-lab4 .
--name: Long in to the ole Docker hup
-run: docker Login -u ${{ secrets.HAMA_USERNAME}} -p ${{secrets.TOKEN}}
+    steps:
+      - name: Checkout our repository
+        uses: actions/checkout@v2
 
--name: Push the docker to that silly little dockerhup
-run: docker push hamad3210/service-web-store-lab4:hamadlshad/service-web-store-lab4
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Build the Docker Image
+        run: docker build -t hama3210/service-web-store-lab4:hamadlshad/service-web-store-lab4 .
+
+      - name: Login in to the old Docker hub
+        run: docker login -u ${{ secrets.HAMA_USERNAME }} -p ${{ secrets.TOKEN }}
+
+      - name: Push the docker to that silly little dockerhub
+        run: docker push hama3210/service-web-store-lab4:hamadlshad/service-web-store-lab4
